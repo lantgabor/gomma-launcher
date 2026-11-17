@@ -11,9 +11,9 @@ import (
 
 func main() {
 	// gotk4 forwards GLib/GTK logs to slog; hide INFO-level noise (e.g. Vulkan loader messages).
-	slog.SetLogLoggerLevel(slog.LevelInfo)
+	slog.SetLogLoggerLevel(slog.LevelWarn)
 
-	app := gtk.NewApplication("com.example.gofrontend", gio.ApplicationFlagsNone)
+	app := gtk.NewApplication("com.example.gofrontend", gio.ApplicationDefaultFlags)
 	app.ConnectActivate(func() { activate(app) })
 
 	if code := app.Run(os.Args); code > 0 {
