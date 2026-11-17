@@ -28,7 +28,7 @@ func activate(app *gtk.Application) {
 	clicks := 0
 	button.ConnectClicked(func() {
 		clicks++
-		slog.Info("clicks: ", "fasz go", clicks)
+		slog.Info("clicks: ", "clicks", clicks)
 		if clicks == 1 {
 			label.SetText("Clicked 1 time")
 		} else {
