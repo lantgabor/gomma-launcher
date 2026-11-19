@@ -1,0 +1,466 @@
+[
+  {
+    "name": "Example Weapon Overhaul Pack",
+    "downloading": 1,
+    "extracting": 1,
+    "status": "OK"
+  },
+  {
+    "name": "Example Enhanced Shaders and Lighting",
+    "downloading": 1,
+    "extracting": 0.72,
+    "status": "OK"
+  },
+  {
+    "name": "Example Sound Overhaul",
+    "downloading": 0.65,
+    "extracting": 0.4,
+    "status": "OK"
+  },
+  {
+    "name": "Example Inventory UI Rework",
+    "downloading": 0.3,
+    "status": "OK"
+  },
+  {
+    "name": "Example Mutant Textures HD",
+    "downloading": 0.08,
+    "status": "OK"
+  },
+  {
+    "name": "Example Economy and Trader Tweaks",
+    "status": "OK"
+  },
+  {
+    "name": "Example Weather and Atmosphere",
+    "status": "OK"
+  },
+  {
+    "name": "Example Very Long Name of the Mod That Keeps Going Past the Column",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Animation Replacer",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Map Marker Additions",
+    "status": "OK"
+  },
+  {
+    "name": "Example Faction Squad Spawns",
+    "status": "Error"
+  },
+  {
+    "name": "Example Item Icons Redone",
+    "status": "OK"
+  },
+  {
+    "name": "Example Hardcore Survival Settings",
+    "status": "Error"
+  },
+  {
+    "name": "Example Radio Music Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Classic Sounds Fix",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Better Weapons Tweaks",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Mutants Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Armor Tweaks",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Classic Weather Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Enhanced Sounds Overhaul",
+    "status": "OK"
+  },
+  {
+    "name": "Example Extended Textures Fix",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Immersive Artifacts Addon",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Simple Weapons Addon",
+    "status": "Error"
+  },
+  {
+    "name": "Example Improved Armor Tweaks",
+    "status": "Error"
+  },
+  {
+    "name": "Example Dynamic Anomalies Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Improved Artifacts Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Dynamic Factions Fix",
+    "status": "Error"
+  },
+  {
+    "name": "Example Improved Traders Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Stashes Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Simple Anomalies Fix",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Realistic Mutants Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Classic Factions Fix",
+    "status": "Error"
+  },
+  {
+    "name": "Example Extended Textures Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Extended Armor Overhaul",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Anomalies Addon",
+    "status": "Error"
+  },
+  {
+    "name": "Example Realistic Weather Overhaul",
+    "status": "OK"
+  },
+  {
+    "name": "Example Better Traders Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Icons Overhaul",
+    "status": "OK"
+  },
+  {
+    "name": "Example Dynamic Factions Fix",
+    "status": "Error"
+  },
+  {
+    "name": "Example Hardcore Mutants Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Classic Traders Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Classic Stashes Tweaks",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Factions Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Enhanced Weapons Overhaul",
+    "status": "Error"
+  },
+  {
+    "name": "Example Classic Artifacts Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Dynamic Factions Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Textures Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Weapons Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Simple Stashes Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Textures Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Hardcore Factions Rework",
+    "status": "Error"
+  },
+  {
+    "name": "Example Classic Mutants Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Hardcore Stashes Rework",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Realistic Traders Overhaul",
+    "status": "OK"
+  },
+  {
+    "name": "Example Extended Weather Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Enhanced Icons Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Hardcore Stashes Tweaks",
+    "status": "OK"
+  },
+  {
+    "name": "Example Hardcore Anomalies Addon",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Dynamic Factions Pack",
+    "status": "Error"
+  },
+  {
+    "name": "Example Enhanced Weather Addon",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Hardcore Weather Tweaks",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Better Weapons Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Anomalies Overhaul",
+    "status": "OK"
+  },
+  {
+    "name": "Example Dynamic Sounds Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Hardcore Weapons Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Simple Armor Rework",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Immersive Sounds Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Textures Overhaul",
+    "status": "Error"
+  },
+  {
+    "name": "Example Simple Mutants Tweaks",
+    "status": "OK"
+  },
+  {
+    "name": "Example Dynamic Traders Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Improved Icons Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Weapons Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Extended Armor Rework",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Extended Textures Fix",
+    "status": "Error"
+  },
+  {
+    "name": "Example Realistic Anomalies Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Extended Weapons Addon",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Simple Weapons Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Classic Mutants Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Hardcore Weather Tweaks",
+    "status": "Error"
+  },
+  {
+    "name": "Example Better Textures Rework",
+    "status": "Error"
+  },
+  {
+    "name": "Example Improved Mutants Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Icons Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Enhanced Stashes Overhaul",
+    "status": "OK"
+  },
+  {
+    "name": "Example Dynamic Factions Addon",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Simple Mutants Tweaks",
+    "status": "Error"
+  },
+  {
+    "name": "Example Better Weapons Tweaks",
+    "status": "OK"
+  },
+  {
+    "name": "Example Extended Weather Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Improved Weapons Fix",
+    "status": "Error"
+  },
+  {
+    "name": "Example Enhanced Traders Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Traders Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Factions Rework",
+    "status": "Error"
+  },
+  {
+    "name": "Example Dynamic Textures Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Sounds Addon",
+    "status": "Error"
+  },
+  {
+    "name": "Example Classic Artifacts Overhaul",
+    "status": "Error"
+  },
+  {
+    "name": "Example Simple Sounds Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Extended Weather Pack",
+    "status": "Error"
+  },
+  {
+    "name": "Example Realistic Artifacts Fix",
+    "status": "Error"
+  },
+  {
+    "name": "Example Improved Armor Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Weather Overhaul",
+    "status": "Error"
+  },
+  {
+    "name": "Example Hardcore Stashes Fix",
+    "status": "OK"
+  },
+  {
+    "name": "Example Hardcore Anomalies Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Enhanced Mutants Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Enhanced Stashes Pack",
+    "status": "Mismatch"
+  },
+  {
+    "name": "Example Extended Weather Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Armor Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Classic Sounds Pack",
+    "status": "OK"
+  },
+  {
+    "name": "Example Extended Textures Tweaks",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Weather Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Enhanced Sounds Rework",
+    "status": "Error"
+  },
+  {
+    "name": "Example Classic Anomalies Addon",
+    "status": "OK"
+  },
+  {
+    "name": "Example Realistic Mutants Tweaks",
+    "status": "OK"
+  },
+  {
+    "name": "Example Classic Anomalies Addon",
+    "status": "Error"
+  },
+  {
+    "name": "Example Immersive Artifacts Rework",
+    "status": "OK"
+  },
+  {
+    "name": "Example Immersive Textures Rework",
+    "status": "OK"
+  }
+]
