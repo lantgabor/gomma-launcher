@@ -13,17 +13,17 @@ import (
 
 // tableColumn describes one column of the mods table.
 type tableColumn struct {
-	title   string
-	expand  bool
-	newCell func() gtk.Widgetter     // builds an empty cell widget
-	bind    func(gtk.Widgetter, Mod) // fills a cell for a mod
-	compare func(a, b Mod) int       // sort order for the column
+	title       string
+	expand      bool
+	defaultSort bool                     // the table starts sorted by this column
+	newCell     func() gtk.Widgetter     // builds an empty cell widget
+	bind        func(gtk.Widgetter, Mod) // fills a cell for a mod
+	compare     func(a, b Mod) int       // sort order for the column
 }
 
 // newModsTable shows the mods in a ColumnView. Its header stays visible while
 // scrolling, and clicking a column header sorts by that column (click again to
-// flip ascending/descending). Rows start in load order, which the "#" column
-// shows and can sort back to.
+// flip ascending/descending). It starts sorted by name.
 func newModsTable(mods []Mod) *gtk.ColumnView {
 	// The list model holds only each mod's index in mods, as a string.
 	// Cells and sorters look the mod up by that index.
@@ -31,24 +31,21 @@ func newModsTable(mods []Mod) *gtk.ColumnView {
 	for i := range mods {
 		indices[i] = strconv.Itoa(i)
 	}
-	sorted := gtk.NewSortListModel(gtk.NewStringList(indices), nil)
-
-	table := gtk.NewColumnView(gtk.NewNoSelection(sorted))
+	// The model is attached after the default sort is set, so the view
+	// starts at the top of the sorted rows.
+	table := gtk.NewColumnView(nil)
 	table.SetShowRowSeparators(true)
-	sorted.SetSorter(table.Sorter())
-
-	// Jump back to the first row whenever the sort order changes.
-	table.Sorter().ConnectChanged(func(gtk.SorterChange) {
-		table.VAdjustment().SetValue(0)
-	})
 
 	for _, col := range modColumns {
+		// The factory callbacks get a GtkColumnViewCell (GTK 4.12+), a
+		// GtkListItem subclass that gotk4 v0.4.1 does not know, so it is
+		// wrapped as a ListItem.
 		factory := gtk.NewSignalListItemFactory()
 		factory.ConnectSetup(func(obj *coreglib.Object) {
-			listItem(obj).SetChild(col.newCell())
+			(&gtk.ListItem{Object: obj}).SetChild(col.newCell())
 		})
 		factory.ConnectBind(func(obj *coreglib.Object) {
-			item := listItem(obj)
+			item := &gtk.ListItem{Object: obj}
 			i := modIndex(item.Item())
 			col.bind(item.Child(), mods[i])
 		})
@@ -61,23 +58,27 @@ func newModsTable(mods []Mod) *gtk.ColumnView {
 		column.SetExpand(col.expand)
 		column.SetSorter(&sorter.Sorter)
 		table.AppendColumn(column)
+		if col.defaultSort {
+			table.SortByColumn(column, gtk.SortAscending)
+		}
 	}
+
+	sorted := gtk.NewSortListModel(gtk.NewStringList(indices), table.Sorter())
+	table.SetModel(gtk.NewNoSelection(sorted))
+
+	// Jump back to the first row whenever the sort order changes.
+	table.Sorter().ConnectChanged(func(gtk.SorterChange) {
+		table.VAdjustment().SetValue(0)
+	})
 	return table
 }
 
 var modColumns = []tableColumn{
 	{
-		title:   "#",
-		newCell: newCellLabel,
-		bind: func(w gtk.Widgetter, mod Mod) {
-			w.(*gtk.Label).SetText(strconv.Itoa(mod.LoadOrder))
-		},
-		compare: func(a, b Mod) int { return cmp.Compare(a.LoadOrder, b.LoadOrder) },
-	},
-	{
-		title:   "Name",
-		expand:  true,
-		newCell: newCellLabel,
+		title:       "Name",
+		expand:      true,
+		defaultSort: true,
+		newCell:     newCellLabel,
 		bind: func(w gtk.Widgetter, mod Mod) {
 			label := w.(*gtk.Label)
 			label.SetText(mod.Name)
@@ -128,12 +129,6 @@ func statusClasses(status string) []string {
 		return []string{"warning"}
 	}
 	return nil
-}
-
-// listItem wraps a factory callback's object. With GTK 4.12+ it is really a
-// GtkColumnViewCell (a GtkListItem subclass) that gotk4 v0.4.1 does not know.
-func listItem(obj *coreglib.Object) *gtk.ListItem {
-	return &gtk.ListItem{Object: obj}
 }
 
 // modIndex reads the index stored in a list model item (a GtkStringObject).
