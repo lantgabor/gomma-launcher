@@ -13,17 +13,16 @@ import (
 
 // tableColumn describes one column of the mods table.
 type tableColumn struct {
-	title       string
-	expand      bool
-	defaultSort bool                     // the table starts sorted by this column
-	newCell     func() gtk.Widgetter     // builds an empty cell widget
-	bind        func(gtk.Widgetter, Mod) // fills a cell for a mod
-	compare     func(a, b Mod) int       // sort order for the column
+	title   string
+	expand  bool
+	newCell func() gtk.Widgetter     // builds an empty cell widget
+	bind    func(gtk.Widgetter, Mod) // fills a cell for a mod
+	compare func(a, b Mod) int       // sort order for the column
 }
 
 // newModsTable shows the mods in a ColumnView. Its header stays visible while
 // scrolling, and clicking a column header sorts by that column (click again to
-// flip ascending/descending). It starts sorted by name.
+// flip ascending/descending). Rows start in the order the data comes in.
 func newModsTable(mods []Mod) *gtk.ColumnView {
 	// The list model holds only each mod's index in mods, as a string.
 	// Cells and sorters look the mod up by that index.
@@ -31,10 +30,11 @@ func newModsTable(mods []Mod) *gtk.ColumnView {
 	for i := range mods {
 		indices[i] = strconv.Itoa(i)
 	}
-	// The model is attached after the default sort is set, so the view
-	// starts at the top of the sorted rows.
-	table := gtk.NewColumnView(nil)
+	sorted := gtk.NewSortListModel(gtk.NewStringList(indices), nil)
+
+	table := gtk.NewColumnView(gtk.NewNoSelection(sorted))
 	table.SetShowRowSeparators(true)
+	sorted.SetSorter(table.Sorter())
 
 	for _, col := range modColumns {
 		// The factory callbacks get a GtkColumnViewCell (GTK 4.12+), a
@@ -58,13 +58,7 @@ func newModsTable(mods []Mod) *gtk.ColumnView {
 		column.SetExpand(col.expand)
 		column.SetSorter(&sorter.Sorter)
 		table.AppendColumn(column)
-		if col.defaultSort {
-			table.SortByColumn(column, gtk.SortAscending)
-		}
 	}
-
-	sorted := gtk.NewSortListModel(gtk.NewStringList(indices), table.Sorter())
-	table.SetModel(gtk.NewNoSelection(sorted))
 
 	// Jump back to the first row whenever the sort order changes.
 	table.Sorter().ConnectChanged(func(gtk.SorterChange) {
@@ -75,10 +69,9 @@ func newModsTable(mods []Mod) *gtk.ColumnView {
 
 var modColumns = []tableColumn{
 	{
-		title:       "Name",
-		expand:      true,
-		defaultSort: true,
-		newCell:     newCellLabel,
+		title:   "Name",
+		expand:  true,
+		newCell: newCellLabel,
 		bind: func(w gtk.Widgetter, mod Mod) {
 			label := w.(*gtk.Label)
 			label.SetText(mod.Name)
