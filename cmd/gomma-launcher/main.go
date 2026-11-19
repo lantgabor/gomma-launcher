@@ -1,53 +1,36 @@
 package main
 
 import (
-	"fmt"
 	"log/slog"
 	"os"
 
 	"github.com/diamondburned/gotk4/pkg/gio/v2"
 	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+
+	"github.com/lantgabor/gomma-launcher/internal/ui"
+)
+
+// Set at build time by the Makefile via -ldflags "-X main.version=... -X main.commit=...".
+var (
+	version = "dev"
+	commit  = ""
 )
 
 func main() {
 	// gotk4 forwards GLib/GTK logs to slog; hide INFO-level noise (e.g. Vulkan loader messages).
 	slog.SetLogLoggerLevel(slog.LevelWarn)
 
-	app := gtk.NewApplication("com.example.gofrontend", gio.ApplicationDefaultFlags)
-	app.ConnectActivate(func() { activate(app) })
+	versionText := "Version " + version
+	if commit != "" {
+		versionText += " (" + commit + ")"
+	}
+
+	app := gtk.NewApplication("io.github.lantgabor.GommaLauncher", gio.ApplicationDefaultFlags)
+	app.ConnectActivate(func() {
+		ui.NewWindow(app, ui.PlaceholderMods(), versionText).SetVisible(true)
+	})
 
 	if code := app.Run(os.Args); code > 0 {
 		os.Exit(code)
 	}
-}
-
-func activate(app *gtk.Application) {
-	label := gtk.NewLabel("Hello, World!")
-
-	button := gtk.NewButtonWithLabel("Click me")
-	clicks := 0
-	button.ConnectClicked(func() {
-		clicks++
-		slog.Info("clicks: ", "clicks", clicks)
-		if clicks == 1 {
-			label.SetText("Clicked 1 time")
-		} else {
-			label.SetText(fmt.Sprintf("Clicked %d times", clicks))
-		}
-	})
-
-	box := gtk.NewBox(gtk.OrientationVertical, 12)
-	box.SetMarginTop(24)
-	box.SetMarginBottom(24)
-	box.SetMarginStart(24)
-	box.SetMarginEnd(24)
-	box.SetVAlign(gtk.AlignCenter)
-	box.Append(label)
-	box.Append(button)
-
-	window := gtk.NewApplicationWindow(app)
-	window.SetTitle("gotk4 Hello World")
-	window.SetChild(box)
-	window.SetDefaultSize(400, 300)
-	window.SetVisible(true)
 }
