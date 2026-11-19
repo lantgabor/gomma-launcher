@@ -1,4 +1,4 @@
-module gofrontend
+module github.com/lantgabor/gomma-launcher
 
 go 1.27.4
 

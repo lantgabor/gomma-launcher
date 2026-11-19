@@ -4,11 +4,11 @@ import "github.com/diamondburned/gotk4/pkg/gtk/v4"
 
 // newMainView is the main page: action sidebar on the left, the mods table on
 // the right, and the Play / Delete Shader Cache bar below the table.
-func newMainView(openSettings func()) *gtk.Box {
+func newMainView(mods []Mod, openSettings func()) *gtk.Box {
 	view := gtk.NewBox(gtk.OrientationHorizontal, 0)
 	view.Append(newSidebar(openSettings))
 	view.Append(gtk.NewSeparator(gtk.OrientationVertical))
-	view.Append(newModsPanel())
+	view.Append(newModsPanel(mods))
 	return view
 }
 
@@ -35,11 +35,11 @@ func newSidebar(openSettings func()) *gtk.CenterBox {
 	return sidebar
 }
 
-func newModsPanel() *gtk.Box {
+func newModsPanel(mods []Mod) *gtk.Box {
 	scroller := gtk.NewScrolledWindow()
 	scroller.SetPolicy(gtk.PolicyNever, gtk.PolicyAutomatic)
 	scroller.SetVExpand(true)
-	scroller.SetChild(newModsTable(loadPlaceholderMods()))
+	scroller.SetChild(newModsTable(mods))
 
 	frame := gtk.NewFrame("Mods")
 	setMargins(frame, 12)

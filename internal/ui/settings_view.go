@@ -6,11 +6,16 @@ func newSettingsView(goBack func()) *gtk.Box {
 	// Paths: either one installation root (subfolders are created inside it),
 	// or, in advanced mode, every path set individually. Only one is shown.
 	installGrid := newFormGrid()
-	addPathRow(installGrid, 0, "Installation path")
+	addPathRow(installGrid, 0, "Installation path", "~/Games/GAMMA")
 
 	advancedGrid := newFormGrid()
-	for i, name := range []string{"Anomaly path", "GAMMA path", "Cache path", "Launcher DB path"} {
-		addPathRow(advancedGrid, i, name)
+	for i, field := range []struct{ name, example string }{
+		{"Anomaly path", "~/Games/Anomaly"},
+		{"GAMMA path", "~/Games/GAMMA"},
+		{"Cache path", "~/.cache/gomma-launcher"},
+		{"Launcher DB path", "~/.local/share/gomma-launcher/launcher.db"},
+	} {
+		addPathRow(advancedGrid, i, field.name, field.example)
 	}
 	advancedGrid.SetVisible(false)
 
@@ -80,13 +85,12 @@ func newFormGrid() *gtk.Grid {
 	return grid
 }
 
-func addPathRow(grid *gtk.Grid, row int, name string) {
+func addPathRow(grid *gtk.Grid, row int, name, example string) {
 	label := gtk.NewLabel(name)
 	label.SetXAlign(0)
-	label.SetSizeRequest(140, -1)
 
 	entry := gtk.NewEntry()
-	entry.SetPlaceholderText("/path/to/install_dir")
+	entry.SetPlaceholderText(example)
 	entry.SetHExpand(true)
 
 	grid.Attach(label, 0, row, 1, 1)

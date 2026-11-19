@@ -15,16 +15,16 @@ import (
 type tableColumn struct {
 	title   string
 	expand  bool
-	newCell func() gtk.Widgetter        // builds an empty cell widget
-	bind    func(gtk.Widgetter, modRow) // fills a cell for a mod
-	compare func(a, b modRow) int       // sort order for the column
+	newCell func() gtk.Widgetter     // builds an empty cell widget
+	bind    func(gtk.Widgetter, Mod) // fills a cell for a mod
+	compare func(a, b Mod) int       // sort order for the column
 }
 
 // newModsTable shows the mods in a ColumnView. Its header stays visible while
 // scrolling, and clicking a column header sorts by that column (click again to
 // flip ascending/descending). Rows start in load order, which the "#" column
 // shows and can sort back to.
-func newModsTable(mods []modRow) *gtk.ColumnView {
+func newModsTable(mods []Mod) *gtk.ColumnView {
 	// The list model holds only each mod's index in mods, as a string.
 	// Cells and sorters look the mod up by that index.
 	indices := make([]string, len(mods))
@@ -36,6 +36,11 @@ func newModsTable(mods []modRow) *gtk.ColumnView {
 	table := gtk.NewColumnView(gtk.NewNoSelection(sorted))
 	table.SetShowRowSeparators(true)
 	sorted.SetSorter(table.Sorter())
+
+	// Jump back to the first row whenever the sort order changes.
+	table.Sorter().ConnectChanged(func(gtk.SorterChange) {
+		table.VAdjustment().SetValue(0)
+	})
 
 	for _, col := range modColumns {
 		factory := gtk.NewSignalListItemFactory()
@@ -64,47 +69,65 @@ var modColumns = []tableColumn{
 	{
 		title:   "#",
 		newCell: newCellLabel,
-		bind: func(w gtk.Widgetter, mod modRow) {
+		bind: func(w gtk.Widgetter, mod Mod) {
 			w.(*gtk.Label).SetText(strconv.Itoa(mod.LoadOrder))
 		},
-		compare: func(a, b modRow) int { return cmp.Compare(a.LoadOrder, b.LoadOrder) },
+		compare: func(a, b Mod) int { return cmp.Compare(a.LoadOrder, b.LoadOrder) },
 	},
 	{
 		title:   "Name",
 		expand:  true,
 		newCell: newCellLabel,
-		bind: func(w gtk.Widgetter, mod modRow) {
-			w.(*gtk.Label).SetText(mod.Name)
-			setClass(w, "error", mod.Status == "Error")
+		bind: func(w gtk.Widgetter, mod Mod) {
+			label := w.(*gtk.Label)
+			label.SetText(mod.Name)
+			if mod.Status == "Error" {
+				label.SetCSSClasses([]string{"error"})
+			} else {
+				label.SetCSSClasses(nil)
+			}
 		},
-		compare: func(a, b modRow) int { return strings.Compare(a.Name, b.Name) },
+		compare: func(a, b Mod) int { return strings.Compare(a.Name, b.Name) },
 	},
 	{
 		title:   "Downloading",
 		newCell: newCellProgressBar,
-		bind: func(w gtk.Widgetter, mod modRow) {
+		bind: func(w gtk.Widgetter, mod Mod) {
 			bindProgress(w.(*gtk.ProgressBar), mod.Downloading)
 		},
-		compare: func(a, b modRow) int { return cmp.Compare(a.Downloading, b.Downloading) },
+		compare: func(a, b Mod) int { return cmp.Compare(a.Downloading, b.Downloading) },
 	},
 	{
 		title:   "Extracting",
 		newCell: newCellProgressBar,
-		bind: func(w gtk.Widgetter, mod modRow) {
+		bind: func(w gtk.Widgetter, mod Mod) {
 			bindProgress(w.(*gtk.ProgressBar), mod.Extracting)
 		},
-		compare: func(a, b modRow) int { return cmp.Compare(a.Extracting, b.Extracting) },
+		compare: func(a, b Mod) int { return cmp.Compare(a.Extracting, b.Extracting) },
 	},
 	{
 		title:   "Status",
 		newCell: newCellLabel,
-		bind: func(w gtk.Widgetter, mod modRow) {
-			w.(*gtk.Label).SetText(mod.Status)
-			setClass(w, "warning", mod.Status == "Mismatch")
-			setClass(w, "error", mod.Status == "Error")
+		bind: func(w gtk.Widgetter, mod Mod) {
+			label := w.(*gtk.Label)
+			label.SetText(mod.Status)
+			label.SetCSSClasses(statusClasses(mod.Status))
 		},
-		compare: func(a, b modRow) int { return strings.Compare(a.Status, b.Status) },
+		compare: func(a, b Mod) int { return strings.Compare(a.Status, b.Status) },
 	},
+}
+
+// statusClasses returns the built-in GTK style classes for a status.
+// SetCSSClasses replaces a cell's whole class list, so a reused cell never
+// keeps the colour of the row it showed before.
+func statusClasses(status string) []string {
+	switch status {
+	case "Error":
+		return []string{"error"}
+	case "Mismatch":
+		return []string{"warning"}
+	}
+	return nil
 }
 
 // listItem wraps a factory callback's object. With GTK 4.12+ it is really a

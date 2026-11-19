@@ -6,8 +6,8 @@ import (
 	"fmt"
 )
 
-// modRow is one row of the mods table.
-type modRow struct {
+// Mod is one row of the mods table. The backend will provide these later.
+type Mod struct {
 	LoadOrder   int     `json:"-"` // 1-based, from the row's position in the list
 	Name        string  `json:"name"`
 	Downloading float64 `json:"downloading"` // 0..1; 0 hides the progress bar
@@ -21,8 +21,9 @@ type modRow struct {
 //go:embed placeholder_mods.json
 var placeholderModsJSON []byte
 
-func loadPlaceholderMods() []modRow {
-	var mods []modRow
+// PlaceholderMods returns the example rows from placeholder_mods.json.
+func PlaceholderMods() []Mod {
+	var mods []Mod
 	if err := json.Unmarshal(placeholderModsJSON, &mods); err != nil {
 		panic(fmt.Sprintf("placeholder_mods.json: %v", err))
 	}
